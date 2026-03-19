@@ -14,28 +14,58 @@
     #crt-overlay::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:8px;box-shadow:inset 0 0 80px rgba(0,0,0,.6)}
     .title-glow{color:#ff00ff;text-shadow:0 0 10px #ff00ff,0 0 30px #ff00ffaa;font-size:10px;margin-bottom:10px;letter-spacing:2px}
     .controls-info{color:#00ffff88;font-size:7px;margin-top:8px;letter-spacing:1px;text-align:center;max-width:480px;line-height:1.8}
+
+    /* Name entry overlay */
+    #name-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,5,30,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;gap:16px;padding:20px}
+    #name-overlay.hidden{display:none}
+    #name-overlay h1{color:#ff00ff;font-size:16px;text-shadow:0 0 10px #ff00ff;text-align:center;line-height:1.6}
+    #name-overlay h2{color:#00ffff;font-size:10px;text-align:center}
+    #name-overlay p{color:#ff88cc;font-size:8px;text-align:center}
+    #name-input{background:rgba(255,255,255,.1);border:2px solid #ff00ff;border-radius:8px;color:#fff;font-family:'Press Start 2P',monospace;font-size:16px;padding:12px 20px;text-align:center;width:260px;max-width:80vw;outline:none;-webkit-user-select:text;user-select:text;touch-action:auto}
+    #name-input:focus{border-color:#00ffff;box-shadow:0 0 15px #00ffff44}
+    #name-input::placeholder{color:#666;font-size:10px}
+    #start-btn{background:linear-gradient(135deg,#ff00ff,#8800aa);border:none;border-radius:8px;color:#fff;font-family:'Press Start 2P',monospace;font-size:10px;padding:14px 30px;cursor:pointer;opacity:0.3;pointer-events:none;transition:all .3s;touch-action:auto;-webkit-tap-highlight-color:transparent}
+    #start-btn.active{opacity:1;pointer-events:auto}
+    #start-btn.active:hover,#start-btn.active:active{transform:scale(1.05);box-shadow:0 0 20px #ff00ff88}
+
+    /* Leaderboard in overlay */
+    #overlay-leaderboard{color:#888;font-size:7px;text-align:center;margin-top:10px;max-height:180px;overflow-y:auto;width:280px}
+    #overlay-leaderboard .lb-title{color:#ffff00;font-size:9px;margin-bottom:8px}
+    #overlay-leaderboard .lb-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+    #overlay-leaderboard .lb-row.gold{color:#ffff00}
+    #overlay-leaderboard .lb-row.silver{color:#ccc}
+    #overlay-leaderboard .lb-row.bronze{color:#cd7f32}
+
     /* Mobile touch controls */
     #touch-controls{display:none;position:fixed;bottom:10px;left:0;right:0;z-index:20;padding:0 15px}
     #touch-controls.active{display:flex;justify-content:space-between;align-items:flex-end}
-    .touch-btn{background:rgba(255,0,255,.2);border:2px solid rgba(255,0,255,.5);border-radius:50%;color:#ff00ff;font-family:'Press Start 2P',monospace;font-size:16px;width:60px;height:60px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;cursor:pointer}
+    .touch-btn{background:rgba(255,0,255,.2);border:2px solid rgba(255,0,255,.5);border-radius:50%;color:#ff00ff;font-family:'Press Start 2P',monospace;font-size:16px;width:64px;height:64px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;cursor:pointer;touch-action:manipulation}
     .touch-btn:active{background:rgba(255,0,255,.5)}
-    .touch-dpad{display:flex;gap:8px}
+    .touch-dpad{display:flex;gap:10px}
     .touch-fire{width:80px;height:80px;font-size:10px;border-radius:50%;background:rgba(0,255,136,.2);border-color:rgba(0,255,136,.5);color:#00ff88}
     .touch-fire:active{background:rgba(0,255,136,.5)}
-    @media(max-width:500px){
-      .title-glow{font-size:8px}
-      .controls-info{font-size:6px}
-      #game-wrapper{border-width:2px}
-    }
+    @media(max-width:500px){.title-glow{font-size:8px}.controls-info{font-size:6px}#game-wrapper{border-width:2px}}
   </style>
 </head>
 <body>
-  <p class="title-glow">🛏️ KLOPSE NIGHTMARE 🛏️</p>
+
+  <!-- Name Entry Overlay (HTML-based, works on mobile!) -->
+  <div id="name-overlay">
+    <h1>🛏️ KLOPSE<br>NIGHTMARE</h1>
+    <h2>~ Sweet60 Edition ~</h2>
+    <p>Wie heißt du?</p>
+    <input type="text" id="name-input" placeholder="DEIN NAME" maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    <button id="start-btn">🎮 LOS GEHT'S!</button>
+    <div id="overlay-leaderboard"></div>
+  </div>
+
+  <p class="title-glow" id="header-text">🛏️ KLOPSE NIGHTMARE 🛏️</p>
   <div id="game-wrapper">
     <canvas id="game"></canvas>
     <div id="crt-overlay"></div>
   </div>
-  <p class="controls-info" id="controls-text">← → BEWEGEN &nbsp; LEERTASTE SCHIEßEN &nbsp; ENTER START</p>
+  <p class="controls-info" id="controls-text">← → BEWEGEN &nbsp; LEERTASTE SCHIEßEN</p>
+
   <div id="touch-controls">
     <div class="touch-dpad">
       <button class="touch-btn" id="btn-left">◀</button>
@@ -43,6 +73,7 @@
     </div>
     <button class="touch-btn touch-fire" id="btn-fire">FEUER</button>
   </div>
+
   <script src="game.js"></script>
 </body>
 </html>
