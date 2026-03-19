@@ -5,7 +5,7 @@
 // ---- FIREBASE CONFIG ----
 // Set your Firebase Realtime Database URL here after creating a project:
 // Instructions: https://console.firebase.google.com
-const FIREBASE_DB_URL = ''; // e.g. 'https://sweet60-xxxxx-default-rtdb.europe-west1.firebasedatabase.app'
+const FIREBASE_DB_URL = 'https://sweet60-10cfb-default-rtdb.europe-west1.firebasedatabase.app';
 
 // ---- CANVAS SETUP ----
 const canvas = document.getElementById('game');
